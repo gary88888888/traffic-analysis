@@ -1,0 +1,140 @@
+{% extends 'nav.html' %}
+{% block content %}
+<h2> 109年各月份車禍分級數量長條圖</h2>
+<div>
+{% comment %} {% for test in tests %}
+<table>
+<tr>
+<td>{{test.processingUnit}}</td>
+
+<td>{{test.accidentLevel}} </td>
+<br>
+</tr>
+</table>
+
+{% endfor %} {% endcomment %}
+<div>
+<select class="custom-select">
+    <option  selected>--109年--</option>
+    <option value="10901">109年1月</option>
+    <option value="10902">109年2月</option>
+    <option value="10903">109年3月</option>
+    <option value="10904">109年4月</option>
+
+</select>
+
+</div>
+
+</div>
+<div class="chart" id="chart" style=" width:80vw;text-align:center;">
+    <canvas id="myChart" ></canvas>
+</div>
+
+
+
+{% endblock content %}
+
+
+<script>
+{% block jquery %}
+var labels =["A1","A2","A3"]
+var defaultData =[]
+var chartData ={}
+
+    var ctx = $('#myChart');
+    var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                    label: '事件數量',
+                    data: defaultData,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.6)',
+                        'rgba(54, 162, 235, 0.6)',
+                        'rgba(255, 206, 86, 0.6)',
+                        'rgba(75, 192, 192, 0.6)',
+                        'rgba(153, 102, 255, 0.6)',
+                        'rgba(255, 159, 64, 0.6)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 2,
+                    borderRadius:10
+
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: false
+                        }
+                    }
+                }
+            });
+
+
+
+
+$('select').on('change', function() {
+
+
+    //myChart.destroy()
+    var accidentLevel = '/api/data/get_accident_level/' + this.value
+
+    //console.log(accidentLevel)
+    //console.log(accidentLevel)
+    $.ajax({
+        method:"GET",
+        url: accidentLevel,
+        success:function(res,index){
+            console.log(accidentLevel)
+            console.log(res)
+            myChart.data.datasets[0].data = []
+            for(index in res){
+
+                myChart.data.datasets[0].data.push(res[index]);
+                myChart.update()
+            }
+
+
+
+            console.log(myChart.data.datasets[0].data);
+
+
+
+
+
+        }
+    })
+
+
+
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock jquery %}
+</script>
+
