@@ -1,0 +1,189 @@
+
+{% extends 'nav.html' %}
+{% block content %}
+</head>
+  <body>
+
+    <div style="width:30vw;padding:5px;">
+        <div class="row">
+            <div class="col"><h3>年月份</h3></div>
+            <div class="col">
+                <select class="custom-select" id="yearMonth">
+                    <option  selected>--109年--</option>
+                    <option value="10901">109年1月</option>
+                    <option value="10902">109年2月</option>
+                    <option value="10903">109年3月</option>
+                    <option value="10904">109年4月</option>
+                    <option value="10905">109年5月</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col"><h4>交通事故分級</h4></div>
+            <div class="col">
+                <select class="custom-select" id="level">
+                    <option  selected>--交通事故分級--</option>
+                    <option value="/1/">一級A1</option>
+                    <option value="/2/">二級A2</option>
+                    <option value="/3/">三級A3</option>
+                </select>
+            </div>
+        </div>
+
+
+
+    </div>
+
+    <div id="map" style="height:70vh;weight:80vw;"></div>
+
+
+    <script type="text/javascript"  >
+
+    var map;
+    var data;
+    var centerLatLng ;
+    var position;
+
+
+    {% load static %}
+    {% block jquery %}
+    //$(document).ready(function(){
+    $('#yearMonth').on('change', function() {
+        var accidentMap = '/api/data/get_accident_trafficMap/' + this.value
+        $('#level').on('change', function() {
+        accidentMap = accidentMap + this.value
+        $.ajax({
+        method:"GET",
+        url: accidentMap,
+        success:function(res,index){
+            data = res;
+            x = data[0].fields.positionX.replace('?','');
+            y = data[0].fields.positionY.replace('?','');
+            console.log(data);
+            centerLatLng ={lat:Number(x),lng:Number(y)};
+            console.log(centerLatLng)
+            initMap()
+            //return centerLatLng; //賦值後需要return
+
+
+        }
+        })
+        });
+    });
+    function initMap() {
+
+        console.log('init')
+        map = new google.maps.Map(document.getElementById('map'), {
+            center:{lat:22.956175,lng:120.538326},
+            zoom: 10
+        });
+
+
+
+        for(var i =0 ;i < data.length; i++){
+
+            var marker = new google.maps.Marker({
+            position: new google.maps.LatLng(Number(data[i].fields.positionX.replace('?','')),Number(data[i].fields.positionY.replace('?',''))),
+            map: map,
+
+
+            icon:{
+                url:"{% static 'img/warning.png' %}",
+                scaledSize:new google.maps.Size(30, 30)
+            }
+            });
+
+
+            var contentString = '<h1>大家好我是資訊視窗</h1> {% for map in maps %} {{map.yearMonth}} {%endfor%}'; //要顯示的 HTML 內容
+
+            var infowindow = new google.maps.InfoWindow({
+                maxWidth:500,
+            });
+
+            google.maps.event.addListener(marker, 'click', (function(marker, i) {
+
+                var x = Number(data[i].fields.positionX.replace('?',''));
+                var y = Number(data[i].fields.positionY.replace('?',''));
+
+
+                return function() {
+                infowindow.setContent(
+                    '<div class="background" style="height:400px;width:400px">'+
+                    '<h6><span style="font-size: 1em; color: Tomato;"><i class="fas fa-exclamation-triangle"></i></span>事故等級 :'+data[i].fields.accidentLevel.replace('?','') +'</h6>'+
+                    '<h6><span style="font-size: 1em; color: Dodgerblue;"><i class="fas fa-clock"></i></span>事故時間點 :'+data[i].fields.accidentTime.replace('?','') +'</h6>'+
+                    '<h6><span style="font-size: 1em; color: #17b01c;"><i class="bi bi-geo-alt-fill"></i></span>事故地點 :'+data[i].fields.dist.replace('?','') +data[i].fields.streetRoad.replace('?','') +'</h6>'+
+                    '<img src="https://maps.googleapis.com/maps/api/streetview?location='+ x +','+ y +'&size=400x300&key=AIzaSyAXwg6KijAC7iPNlT9UTBiuQNSOVi5LWcc" >'+
+                    '</div>'
+
+
+
+                    );
+                infowindow.open(map, marker);
+
+                const panorama = new google.maps.StreetViewPanorama(
+                    document.getElementById("pano"),
+                    {
+                    position: new google.maps.LatLng(Number(data[i].fields.positionX.replace('?','')),Number(data[i].fields.positionY.replace('?',''))),
+                    pov: {
+                        heading: 34,
+                        pitch: 10,
+                    },
+                    }
+                );
+                map.setStreetView(panorama);
+
+
+
+
+                }
+
+
+            })(marker, i));
+
+
+
+        }
+
+
+
+
+
+        marker.setMap(map);
+
+
+
+    };
+
+
+
+
+
+    {% endblock jquery %}
+    </script>
+    <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjzjIWfIYVkcLjef9RMJ_1j3teDzZWxYU&callback=initMap">
+
+
+    </script>
+  </body>
+
+{% endblock content %}
+{% comment %}
+{% extends 'nav.html' %}
+{% block content %}
+<div id="map" style="height:60vh"></div>
+{% endblock content %}
+<script >
+{% block jquery %}
+    var map;
+    function initMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: 25.04, lng: 121.512},
+        zoom: 18
+    });
+    }
+{% endblock jquery %}
+</script>
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjzjIWfIYVkcLjef9RMJ_1j3teDzZWxYU&callback=initMap">
+</script> {% endcomment %}

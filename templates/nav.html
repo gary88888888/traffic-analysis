@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>交通資訊分析</title>
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <!-- Our Custom CSS -->
@@ -28,7 +28,7 @@
     <div class="wrapper">
         <!-- Sidebar Holder -->
         <nav id="sidebar" class=" sticky-top" >
-            <div class="sidebar-header" class=" ">
+            <div class="sidebar-header" >
 
                 <div
                 class="bg-image d-flex justify-content-center align-items-center "
@@ -58,10 +58,10 @@
                     <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">交通數據</a>
                     <ul class="collapse list-unstyled" id="pageSubmenu">
                         <li>
-                            <a href="/trafficData">數據一</a>
+                            <a href="/trafficData">分級車禍數量統計</a>
                         </li>
                         <li>
-                            <a href="#">Page 2</a>
+                            <a href="/trafficMap">事故地圖</a>
                         </li>
                         <li>
                             <a href="#">Page 3</a>
@@ -140,8 +140,9 @@
                 $('#sidebar').toggleClass('active');
                 $(this).toggleClass('active');
             });
-            {% block jquery %}{% endblock jquery %}
+
         });
+        {% block jquery %}{% endblock jquery %}
     </script>
 </body>
 <style>

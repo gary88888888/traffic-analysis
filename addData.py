@@ -7,7 +7,7 @@ django.setup()
 
 from mysite.models import TrafficAccident
 
-url ="https://api.kcg.gov.tw/api/service/get/c0bbdc36-444e-48b4-a42c-85ae074edfac"
+url ="https://api.kcg.gov.tw/api/service/get/d32c8bcf-82b2-4061-92f8-0fe2efc29cd3"
 rawdata = rq.get(url)
 # json_dict = json.loads(resp.text)
 data = rawdata.json()["data"]

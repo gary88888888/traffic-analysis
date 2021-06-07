@@ -53,20 +53,16 @@ var chartData ={}
                         'rgba(255, 99, 132, 0.6)',
                         'rgba(54, 162, 235, 0.6)',
                         'rgba(255, 206, 86, 0.6)',
-                        'rgba(75, 192, 192, 0.6)',
-                        'rgba(153, 102, 255, 0.6)',
-                        'rgba(255, 159, 64, 0.6)'
+
                     ],
                     borderColor: [
                         'rgba(255, 99, 132, 1)',
                         'rgba(54, 162, 235, 1)',
                         'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
+
                     ],
                     borderWidth: 2,
-                    borderRadius:10
+                    borderRadius:2
 
                     }]
                 },
@@ -83,40 +79,18 @@ var chartData ={}
 
 
 $('select').on('change', function() {
-
-
-    //myChart.destroy()
     var accidentLevel = '/api/data/get_accident_level/' + this.value
-
-    //console.log(accidentLevel)
-    //console.log(accidentLevel)
     $.ajax({
         method:"GET",
         url: accidentLevel,
         success:function(res,index){
-            console.log(accidentLevel)
-            console.log(res)
             myChart.data.datasets[0].data = []
             for(index in res){
-
                 myChart.data.datasets[0].data.push(res[index]);
                 myChart.update()
             }
-
-
-
-            console.log(myChart.data.datasets[0].data);
-
-
-
-
-
         }
     })
-
-
-
-
 });
 
 
