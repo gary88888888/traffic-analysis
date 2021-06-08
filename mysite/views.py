@@ -12,7 +12,7 @@ def index(request):
     return render(request,'index.html',locals())
 
 
-def trafficData(request):
+def trafficData_109(request):
     A1 = TrafficAccident.objects.filter(accidentLevel__contains='A1').count()
     A2 = TrafficAccident.objects.filter(accidentLevel__contains='A2').count()
     A3 = TrafficAccident.objects.filter(accidentLevel__contains='A3').count()
@@ -21,7 +21,19 @@ def trafficData(request):
         "A2":A2,
         "A3":A3,
     }
-    return render(request,'trafficData.html',locals())
+    return render(request,'trafficData_109.html',locals())
+
+
+def trafficData_110(request):
+    A1 = TrafficAccident.objects.filter(accidentLevel__contains='A1').count()
+    A2 = TrafficAccident.objects.filter(accidentLevel__contains='A2').count()
+    A3 = TrafficAccident.objects.filter(accidentLevel__contains='A3').count()
+    accidentLevel = {
+        "A1":A1,
+        "A2":A2,
+        "A3":A3,
+    }
+    return render(request,'trafficData_110.html',locals())
 
 def trafficMap(request):
 

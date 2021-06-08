@@ -1,0 +1,98 @@
+{% extends 'nav.html' %}
+{% block content %}
+<h2> 110年各月份車禍分級數量長條圖</h2>
+<div>
+{% comment %} {% for test in tests %}
+<table>
+<tr>
+<td>{{test.processingUnit}}</td>
+
+<td>{{test.accidentLevel}} </td>
+<br>
+</tr>
+</table>
+
+{% endfor %} {% endcomment %}
+<div>
+<select class="custom-select">
+    <option  selected>--110年--</option>
+    <option value="11001">110年1月</option>
+    <option value="11002">110年2月</option>
+    <option value="11003">110年3月</option>
+
+</select>
+
+</div>
+
+</div>
+<div class="chart" id="chart" style=" width:80vw;text-align:center;">
+    <canvas id="myChart" ></canvas>
+</div>
+
+{% endblock content %}
+
+
+<script>
+{% block jquery %}
+var labels =["A1","A2","A3"]
+var defaultData =[]
+var chartData ={}
+
+    var ctx = $('#myChart');
+    var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                    label: '事件數量',
+                    data: defaultData,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.6)',
+                        'rgba(54, 162, 235, 0.6)',
+                        'rgba(255, 206, 86, 0.6)',
+
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+
+                    ],
+                    borderWidth: 2,
+                    borderRadius:2
+
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: false
+                        }
+                    }
+                }
+            });
+
+
+
+
+$('select').on('change', function() {
+    var accidentLevel = '/api/data/get_accident_level/' + this.value
+    $.ajax({
+        method:"GET",
+        url: accidentLevel,
+        success:function(res,index){
+            myChart.data.datasets[0].data = []
+            for(index in res){
+                myChart.data.datasets[0].data.push(res[index]);
+                myChart.update()
+            }
+        }
+    })
+});
+
+
+
+
+{% endblock jquery %}
+</script>
+
