@@ -7,10 +7,13 @@ from django.db.models import Q
 from django.core import serializers
 from mysite.models import TrafficAccident
 
+
 # Create your views here.
 def index(request):
     return render(request,'index.html',locals())
 
+def home(request):
+    return render(request,'home.html',locals())
 
 def trafficData_109(request):
     A1 = TrafficAccident.objects.filter(accidentLevel__contains='A1').count()
