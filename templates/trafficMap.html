@@ -40,6 +40,13 @@
                 </select>
             </div>
         </div>
+        <div class="row">
+            <div class="col"></div>
+            <div class="col">
+                <button id="submit" type="button" class="btn btn-primary btn-small">查詢</button>
+            </div>
+        </div>
+
 
 
 
@@ -54,15 +61,24 @@
     var data;
     var centerLatLng ;
     var position;
-
+    var yearMonth;
+    var level
 
     {% load static %}
     {% block jquery %}
     //$(document).ready(function(){
     $('#yearMonth').on('change', function() {
-        var accidentMap = '/api/data/get_accident_trafficMap/' + this.value
-        $('#level').on('change', function() {
-        accidentMap = accidentMap + this.value
+        yearMonth = this.value
+        //var accidentMap = '/api/data/get_accident_trafficMap/' + this.value
+
+    });
+    $('#level').on('change', function() {
+        level = this.value
+        //accidentMap = accidentMap + this.value
+
+    });
+    $('#submit').on('click', function() {
+        var accidentMap = '/api/data/get_accident_trafficMap/' + yearMonth + level
         $.ajax({
         method:"GET",
         url: accidentMap,
@@ -79,7 +95,6 @@
 
         }
         })
-        });
     });
     function initMap() {
 
@@ -96,27 +111,17 @@
             var marker = new google.maps.Marker({
             position: new google.maps.LatLng(Number(data[i].fields.positionX.replace('?','')),Number(data[i].fields.positionY.replace('?',''))),
             map: map,
-
-
             icon:{
                 url:"{% static 'img/warning.png' %}",
                 scaledSize:new google.maps.Size(30, 30)
             }
             });
-
-
-            var contentString = '<h1>大家好我是資訊視窗</h1> {% for map in maps %} {{map.yearMonth}} {%endfor%}'; //要顯示的 HTML 內容
-
             var infowindow = new google.maps.InfoWindow({
                 maxWidth:500,
             });
-
             google.maps.event.addListener(marker, 'click', (function(marker, i) {
-
                 var x = Number(data[i].fields.positionX.replace('?',''));
                 var y = Number(data[i].fields.positionY.replace('?',''));
-
-
                 return function() {
                 infowindow.setContent(
                     '<div class="background" style="height:400px;width:400px">'+
@@ -125,9 +130,6 @@
                     '<h6><span style="font-size: 1em; color: #17b01c;"><i class="bi bi-geo-alt-fill"></i></span>事故地點 :'+data[i].fields.dist.replace('?','') +data[i].fields.streetRoad.replace('?','') +'</h6>'+
                     '<img src="https://maps.googleapis.com/maps/api/streetview?location='+ x +','+ y +'&size=400x300&key=AIzaSyAXwg6KijAC7iPNlT9UTBiuQNSOVi5LWcc" >'+
                     '</div>'
-
-
-
                     );
                 infowindow.open(map, marker);
 
