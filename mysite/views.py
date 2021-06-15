@@ -55,6 +55,7 @@ def get_accident_level(request,id,*args,**kwargs,):
 def get_accident_trafficMap(request,yearMonth,level,*args,**kwargs,):
     yearMonth = yearMonth
     level = level
+
     print(id)
-    test =  serializers.serialize("json", TrafficAccident.objects.filter(Q(accidentLevel__contains = level) & Q(yearMonth__contains = yearMonth)),ensure_ascii=False)
+    test =  serializers.serialize("json", TrafficAccident.objects.filter(Q(accidentLevel__contains = level) & Q(yearMonth__contains = yearMonth) ),ensure_ascii=False )
     return HttpResponse(test, content_type='application/json; charset=utf-8')
