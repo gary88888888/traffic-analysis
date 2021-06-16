@@ -3,10 +3,10 @@ from django.shortcuts import redirect
 from django.shortcuts import render
 from django.http import HttpResponse,JsonResponse
 from django.db.models import Q
-
+from django.views.decorators.csrf import csrf_exempt
 from django.core import serializers
 from mysite.models import TrafficAccident
-
+@csrf_exempt
 # Create your views here.
 def index(request):
     return render(request,'index.html',locals())
@@ -52,10 +52,32 @@ def get_accident_level(request,id,*args,**kwargs,):
         "A3":A3,
     }
     return JsonResponse(accidentLevel,safe='false')
-def get_accident_trafficMap(request,yearMonth,level,*args,**kwargs,):
+
+
+
+def get_accident_trafficMap_yearMonth(request,yearMonth,*args,**kwargs,):
+    yearMonth = yearMonth
+
+
+    data =  serializers.serialize("json", TrafficAccident.objects.filter( Q(yearMonth__contains = yearMonth) ),ensure_ascii=False )
+    return HttpResponse(data, content_type='application/json; charset=utf-8')
+def get_accident_trafficMap_yearMonth_level(request,yearMonth,level,*args,**kwargs,):
     yearMonth = yearMonth
     level = level
 
-    print(id)
-    test =  serializers.serialize("json", TrafficAccident.objects.filter(Q(accidentLevel__contains = level) & Q(yearMonth__contains = yearMonth) ),ensure_ascii=False )
-    return HttpResponse(test, content_type='application/json; charset=utf-8')
+
+    data =  serializers.serialize("json", TrafficAccident.objects.filter( Q(yearMonth__contains = yearMonth) & Q(accidentLevel__contains = level)),ensure_ascii=False )
+    return HttpResponse(data, content_type='application/json; charset=utf-8')
+
+def get_accident_trafficMap(request,*args,**kwargs,):
+    if request.method == 'POST':
+        yearMonth = request.POST.get("yearMonth")
+        level = request.POST.get("level")
+
+
+
+
+
+    data =  serializers.serialize("json", TrafficAccident.objects.filter(Q(accidentLevel__contains = level) & Q(yearMonth__contains = yearMonth) ),ensure_ascii=False )
+
+    return HttpResponse(data, content_type='application/json; charset=utf-8')
