@@ -32,11 +32,7 @@
 
                 </select>
             </div>
-            <div class="col">
-                <button id="submit" type="button" class="btn btn-primary" >查詢
-                <span class="spinner-border spinner-border-sm" role= 'status' aria-hidden="false"></span>
-                </button>
-            </div>
+
         </div>
         <div class="row">
             <div class="col-4"><h4>交通事故分級</h4></div>
@@ -50,16 +46,14 @@
                 </select>
             </div>
         </div>
-        {% comment %} <div class="row">
-            <div class="col-4"><h4>時間</h4></div>
-            <div class="col-5">
-                <select class="custom-select" id="dayNight">
-                    <option  selected>--交通事故時間--</option>
-                    <option value="早上/">早上</option>
-                    <option value="下午/">下午</option>
-                </select>
+         <div class="row">
+            <div class="col">
+                <button id="submit" type="button" class="btn btn-primary" >查詢</button>
+                <button id="toggleMarker" type="button" class="btn btn-primary" >標記開關</button>
+                <button id="toggleheatmap" type="button" class="btn btn-primary" >熱度開關</button>
+
             </div>
-        </div> {% endcomment %}
+        </div>
 
 
 
@@ -73,17 +67,27 @@
 
 
     var map;
+    var heatmap;
     var data;
     var centerLatLng ;
     var position;
     var yearMonth = '';
     var level =''
     var dayNight = ''
-    var marker
+    var marker;
+    var markers=[];
     var isShow = false
     {% load static %}
     {% block jquery %}
-    //$(document).ready(function(){
+    $(document).ready(function(){
+    $("#toggleheatmap").hide();
+    $("#toggleMarker").hide();
+     $('#toggleheatmap').on('click', function() {
+         toggleHeatmap()
+     })
+      $('#toggleMarker').on('click', function() {
+         toggleMarker()
+     })
     $('#yearMonth').on('change', function() {
         yearMonth = this.value
         console.log(yearMonth)
@@ -128,6 +132,8 @@
 
 
         success:function(res,index){
+            $("#toggleheatmap").show();
+            $("#toggleMarker").show();
             data =JSON.parse(res) ;
             console.log(data[0].fields);
             //x = data[0].fields.positionX;
@@ -140,8 +146,11 @@
         }
         })
     });
+    })
     function initMap() {
-
+        marker = null
+        markers = []
+        map = null
         console.log('init')
         map = new google.maps.Map(document.getElementById('map'), {
             center:{lat:22.956175,lng:120.538326},
@@ -151,36 +160,40 @@
 
 
         for(var i =0 ;i < data.length; i++){
-            if(level == "1"){
+            var string = data[i].fields.accidentLevel
+            if(string.indexOf("A1")!=-1){
                 marker = new google.maps.Marker({
                 position: new google.maps.LatLng(Number(data[i].fields.positionX.replace('?','')),Number(data[i].fields.positionY.replace('?',''))),
                 map: map,
                 optimized: true ,
                 icon:{
                     url:"{% static 'img/warning-1.png' %}",
-                    scaledSize:new google.maps.Size(30,30)
+                    scaledSize:new google.maps.Size(30,40)
                 }
                 });
-            }else if(level == "2"){
+                markers.push(marker)
+            }else if(string.indexOf("A2")!=-1){
                 marker = new google.maps.Marker({
                 position: new google.maps.LatLng(Number(data[i].fields.positionX.replace('?','')),Number(data[i].fields.positionY.replace('?',''))),
                 map: map,
                 optimized: true ,
                 icon:{
                     url:"{% static 'img/warning-2.png' %}",
-                    scaledSize:new google.maps.Size(15,15)
+                    scaledSize:new google.maps.Size(15,20)
                 }
                 });
-            }else if(level == "3"){
+                markers.push(marker)
+            }else if(string.indexOf("A3")!=-1){
                 marker = new google.maps.Marker({
                 position: new google.maps.LatLng(Number(data[i].fields.positionX.replace('?','')),Number(data[i].fields.positionY.replace('?',''))),
                 map: map,
                 optimized: true ,
                 icon:{
                     url:"{% static 'img/warning-3.png' %}",
-                    scaledSize:new google.maps.Size(15,15)
+                    scaledSize:new google.maps.Size(15,20)
                 }
                 });
+                markers.push(marker)
             }
             var infowindow = new google.maps.InfoWindow({
                 maxWidth:500,
@@ -210,37 +223,73 @@
                     }
                 );
                 map.setStreetView(panorama);
-
-
-
-
                 }
-
-
             })(marker, i));
-
-
-
         }
 
+        var gradient = [
+            'rgba(0, 0, 255, 0)',
+            'rgba(0, 150, 255, 1)',
+            'rgba(50, 120, 205, 1)',
+            'rgba(100, 90, 155, 1)',
+            'rgba(150, 60, 105, 1)',
+            'rgba(200, 30, 55, 1)',
+            'rgba(255, 0, 0, 1)'
+        ];
+        var heatposition=[]
+        for(var i =0 ;i < data.length; i++){
+            heatposition.push({'location': new google.maps.LatLng(Number(data[i].fields.positionX.replace('?','')),Number(data[i].fields.positionY.replace('?',''))), 'weight': 10})
 
 
 
+        };
+
+        heatmap = new google.maps.visualization.HeatmapLayer({
+            map: map,
+            data:heatposition ,
+            radius:50,
+            gradient:gradient
+        })
 
         marker.setMap(map);
-
-
-
     };
+    function initHeatMap(){
 
 
+        var heatposition=[]
+        for(var i =0 ;i < data.length; i++){
+            heatposition.push(new google.maps.LatLng(Number(data[i].fields.positionX.replace('?','')),Number(data[i].fields.positionY.replace('?',''))))
+
+
+
+        };
+
+        heatmap = new google.maps.visualization.HeatmapLayer({
+            map: map,
+            data:heatposition ,
+            radius:30
+        })
+    }
+    function toggleHeatmap() {
+    heatmap.setMap(heatmap.getMap() ? null : map);
+    }
+    function toggleMarker() {
+        setMapOnAll(marker.getMap()?null : map);
+    }
+
+    function setMapOnAll(map) {
+        console.log(markers)
+        for (let i = 0; i < markers.length; i++) {
+            markers[i].setMap(map);
+        }
+    }
 
 
 
     {% endblock jquery %}
     </script>
     <script async defer
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjzjIWfIYVkcLjef9RMJ_1j3teDzZWxYU&callback=initMap">
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjzjIWfIYVkcLjef9RMJ_1j3teDzZWxYU&callback=initMap&libraries=visualization" async defer">
 
 
     </script>
