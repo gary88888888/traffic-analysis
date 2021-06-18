@@ -1,6 +1,6 @@
 {% extends 'nav.html' %}
 {% block content %}
-<h2> 110年各月份車禍分級數量長條圖</h2>
+<div style="text-align:center"><h2> 110年各月份車禍分級數量長條圖</h2></div>
 <div>
 {% comment %} {% for test in tests %}
 <table>
@@ -47,15 +47,15 @@ var chartData ={}
                     label: '事件數量',
                     data: defaultData,
                     backgroundColor: [
-                        'rgba(255, 99, 132, 0.6)',
-                        'rgba(54, 162, 235, 0.6)',
-                        'rgba(255, 206, 86, 0.6)',
+                        'rgba(255, 153, 153, 0.6)',
+                        'rgba(153, 102,153, 0.6)',
+                        'rgba(255, 204, 204, 0.6)',
 
                     ],
                     borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
+                        'rgba(255, 153,153, 1)',
+                        'rgba(153, 102, 153, 1)',
+                        'rgba(255, 204, 204, 1)',
 
                     ],
                     borderWidth: 2,
