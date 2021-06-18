@@ -1,6 +1,6 @@
 {% extends 'nav.html' %}
 {% block content %}
-<h2> 109年各月份車禍分級數量長條圖</h2>
+<div style="text-align:center"><h2>109年各月份車禍分級數量長條圖</h2></div>
 <div>
 {% comment %} {% for test in tests %}
 <table>
@@ -33,7 +33,7 @@
 </div>
 
 </div>
-<div class="chart" id="chart" style=" width:60vw;text-align:center;height:30vh">
+<div class="chart" id="chart" style=" width:80vw;text-align:center;">
     <canvas id="myChart" ></canvas>
 </div>
 
@@ -55,15 +55,15 @@ var chartData ={}
                     label: '事件數量',
                     data: defaultData,
                     backgroundColor: [
-                        'rgba(255, 99, 132, 0.6)',
-                        'rgba(54, 162, 235, 0.6)',
-                        'rgba(255, 206, 86, 0.6)',
+                        'rgba(0, 102, 0, 0.6)',
+                        'rgba(102, 204, 102, 0.6)',
+                        'rgba(204,255, 153, 0.6)',
 
                     ],
                     borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
+                        'rgba0, 102, 0, 1)',
+                        'rgba(102, 204, 102, 1)',
+                        'rgba(104, 255, 153, 1)',
 
                     ],
                     borderWidth: 2,

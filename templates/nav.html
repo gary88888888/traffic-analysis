@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>KTA高雄交通事故資訊分析</title>
+    <title>交通資訊分析</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
@@ -17,7 +17,6 @@
     {% comment %} <link rel="stylesheet" href="style5.css"> {% endcomment %}
     {% load static %}
     <link rel="stylesheet"   href=" {% static 'css/sidebar.css' %}">
-    <link rel="shortcut icon" href="{%  static 'favicon.ico' %}">
     <!-- Font Awesome JS -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
@@ -33,15 +32,14 @@
 
                 <div
                 class="bg-image d-flex justify-content-center align-items-center "
-                id="sidebartitle"
-
-                ><h3>交通資訊分析</h3></div>
+                id="sidebartitle"><h5> </h5></div>
+            
             </div>
 
             <ul class="list-unstyled components sticky-top">
 
                 <li class="active">
-                    <a href="/home" ><i class="fas fa-home"></i>首頁</a>
+                    <a href="/home" ><i class="fas fa-home"></i> Home</a>
                     {% comment %} <ul class="collapse list-unstyled" id="homeSubmenu">
                         <li>
                             <a href="#">Home 1</a>
@@ -55,9 +53,9 @@
                     </ul> {% endcomment %}
                 </li>
                 <li>
-                    <a href="#"><i class="fas fa-align-justify"></i>關於</a>
+                    <a href="#"><i class="fas fa-align-justify"></i> About</a>
 
-                    <a href="#pageSubmenu01" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">交通數據</a>
+                    <a href="#pageSubmenu01" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="bi bi-collection-fill"></i> Data</a>
 
                     <ul class="collapse list-unstyled" id="pageSubmenu01">
                         <li>
@@ -74,13 +72,10 @@
                             <a href="/trafficMap">事故地圖</a>
                         </li>
 
-                        <li>
-                            <a href="#">Page 3</a>
-                        </li>
                     </ul>
                 </li>
                 <li>
-                <a href="#pageSubmenu2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">數據分析</a>
+                <a href="#pageSubmenu2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="bi bi-bar-chart-line-fill"></i> Analytics</a>
                     <ul class="collapse list-unstyled" id="pageSubmenu2">
                         <li>
                             <a href="#">Page 1</a>
@@ -94,15 +89,38 @@
                     </ul>
 
                 </li>
-
-            </ul>
-
-            <ul class="list-unstyled CTAs">
                 <li>
-                    <a href="/admin" class="download">後臺管理</a>
-                </li>
+                    <a href="#pageSubmenu3" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="bi bi-bookmark-check-fill"></i></i> Collection</a>
+                        <ul class="collapse list-unstyled" id="pageSubmenu3">
+                            <li>
+                                <a href="https://gary-website-test.herokuapp.com/">Gary大神</a>
+                            </li>
+                            <li>
+                                <a href="http://eddie31-blog.herokuapp.com/">賴Eddie</a>
+                            </li>
+                            <li>
+                                <a href="https://kai-sheng.herokuapp.com/">Peter學長</a>
+                            </li>
+                            <li>
+                                <a href="http://cws-python.herokuapp.com/">Weixiiiiin</a>
+                            </li>
+                            <li>
+                                <a href="https://cclemon-python.herokuapp.com/">cclemon</a>
+                            </li>
+                        </ul>
+    
+                    </li>
+               
+                
 
             </ul>
+            <ul class = "list-unstyled CTAs">
+                <li class="nav-item">                  
+                    <a href="/admin/" class = "download"></i> Superuser</a>
+                </li>
+            </ul>
+
+            
         </nav>
 
         <!-- Page Content Holder -->
@@ -124,7 +142,16 @@
 
 
 
-
+                            {% comment %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Page</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Page</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Page</a>
+                            </li> {% endcomment %}
 
                     </div>
                 </div>
@@ -148,7 +175,6 @@
     </script>
 </body>
 <style>
-
 {% block css %}{% endblock css %}
 
 

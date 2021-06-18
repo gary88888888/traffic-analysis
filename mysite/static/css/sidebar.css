@@ -5,12 +5,12 @@
 
 
 body {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Courier New','Impact','微軟行書體', sans-serif;
     background: #fafafa;
 }
 
 p {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Courier New','Impact','微軟行書體', sans-serif;
     font-size: 1.1em;
     font-weight: 300;
     line-height: 1.7em;
@@ -25,7 +25,7 @@ a, a:hover, a:focus {
 
 .navbar {
     padding: 15px 10px;
-    background-image: url("/static/img/traffic_2.jpg");
+    background-color: #9BB9D6;
     opacity: 0.7;
     border: none;
     border-radius: 10px;
@@ -62,8 +62,8 @@ a, a:hover, a:focus {
 #sidebar {
     min-width: 200px;
     max-width: 200px;
-    background: #4f597c;
-    color: #fff;
+    background:#B0C9Cf;
+    color: #003853;
     transition: all 0.3s cubic-bezier(0.945, 0.020, 0.270, 0.665);
     transform-origin: bottom left;
 }
@@ -75,24 +75,26 @@ a, a:hover, a:focus {
 
 #sidebar .sidebar-header {
     padding: 0px;
-    background: #5882f7;
+    background: #e4dcc8;
+    text-align: center;
 
 }
 #sidebar #sidebartitle{
-    background-image: url("/static/img/traffic_1.jpg");
+    background-image: url("/static/img/cat.jpg");
     height: 15vh;
     margin: 0;
     background-size: cover;
-    sidebartitle-filter: blur(5px);
+    text-align: center;
+    color:#003853;
 }
 
 #sidebar ul.components {
     padding: 0px 0;
-    border-bottom: 1px solid #47748b;
+    border-bottom: 1px solid #003853;
 }
 
 #sidebar ul p {
-    color: #fff;
+    color: #003853;
     padding: 10px;
 }
 
@@ -102,15 +104,14 @@ a, a:hover, a:focus {
     display: block;
 }
 #sidebar ul li a:hover {
-    color: #7386D5;
-    background: #fff;
+    color: #003853;
+    background: #E1D0C9;
 }
 
 #sidebar ul li.active > a, a[aria-expanded="true"] {
-    color: #fff;
-    background: #6d7fcc;
+    color: #003853;
+    background: #C5D9DD;
 }
-
 
 a[data-toggle="collapse"] {
     position: relative;
@@ -127,7 +128,7 @@ a[data-toggle="collapse"] {
 ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
-    background: #6d7fcc;
+    background: #88A9B0;
 }
 
 ul.CTAs {
@@ -143,13 +144,13 @@ ul.CTAs a {
 }
 
 a.download {
-    background: #fff;
-    color: #7386D5;
+    background: #88A9B0;
+    color: #003853;
 }
 
 a.article, a.article:hover {
-    background: #6d7fcc !important;
-    color: #fff !important;
+    background: #88A9B0 !important;
+    color: #003853 !important;
 }
 
 
@@ -159,10 +160,10 @@ a.article, a.article:hover {
 ----------------------------------------------------- */
 #content {
     width: 100%;
-    padding:0 20px 20px 20px;
+    padding: 20px;
     min-height: 100vh;
     transition: all 0.3s;
-    background-color: whitesmoke;
+    background-color: #E3E2DD;
 
 
 }
