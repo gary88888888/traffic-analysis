@@ -1,0 +1,143 @@
+{% extends 'nav.html' %}
+{% block content %}
+
+
+<div id="chart"></div>
+{% endblock content %}
+
+
+<script>
+{% block jquery %}
+var data
+var dayData=[]
+var chartData=[]
+var count
+var current = null
+$(document).ready(function(){
+
+$.ajax({
+        method:"GET",
+        url: '/testdata/',
+        success:function(res,index){
+            data = res
+
+            for(let i =0;i< data.length;i++){
+                d = data[i].fields.accidentTime.replace('?','')
+                d = d.slice(0,-12)
+
+                time = new Date(d).getTime()
+                dayData.push(time)
+
+            }
+
+            dayData.sort()
+
+            for(let i =0;i< dayData.length;i++){
+                if(dayData[i] != current){
+                    if(count > 0){
+                        chartData.push([current,count])
+                    }
+                    current = dayData[i];
+                    count = 1
+                }else{
+                    count ++
+                }
+
+
+            }
+
+        }
+    })
+
+
+
+
+
+
+
+
+
+var options = {
+          series: [
+          {
+            name: "A1事故件數",
+            data: chartData
+          },
+
+        ],
+           chart: {
+          id: 'area-datetime',
+          type: 'area',
+          height: 350,
+          zoom: {
+            autoScaleYaxis: true
+          }
+        },
+        annotations: {
+          yaxis: [{
+            y: 30,
+            borderColor: '#999',
+            label: {
+              show: true,
+              text: 'Support',
+              style: {
+                color: "#fff",
+                background: '#00E396'
+              }
+            }
+          }],
+          xaxis: [{
+            x: new Date('14 Nov 2012').getTime(),
+            borderColor: '#999',
+            yAxisIndex: 0,
+            label: {
+              show: true,
+              text: 'Rally',
+              style: {
+                color: "#fff",
+                background: '#775DD0'
+              }
+            }
+          }]
+        },
+        dataLabels: {
+          enabled: false
+        },
+        markers: {
+          size: 0,
+          style: 'hollow',
+        },
+        xaxis: {
+          type: 'datetime',
+
+          tickAmount: 6,
+        },
+        tooltip: {
+          x: {
+            format: 'dd MM yyyy'
+          }
+        },
+        fill: {
+          type: 'gradient',
+          gradient: {
+            shadeIntensity: 1,
+            opacityFrom: 0.7,
+            opacityTo: 0.9,
+            stops: [0, 100]
+          }
+        },
+
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chart"), options);
+        chart.render();
+
+
+})
+
+
+
+{% endblock jquery %}
+
+
+</script>
