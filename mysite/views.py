@@ -10,8 +10,8 @@ from mysite.models import TrafficAccident
 # Create your views here.
 def index(request):
     return render(request,'index.html',locals())
-def test(request):
-    return render(request,'test.html',locals())
+def accident_count(request):
+    return render(request,'accident_count.html',locals())
 
 def trafficData_109(request):
     A1 = TrafficAccident.objects.filter(accidentLevel__contains='A1').count()
@@ -37,19 +37,30 @@ def trafficData_110(request):
     return render(request,'trafficData_110.html',locals())
 
 def trafficMap(request):
-
-
     return render(request,'trafficMap.html',locals())
 
 
-def testdata(request):
 
-    A1t = TrafficAccident.objects.filter(accidentLevel__contains='A1' )
+
+
+
+
+
+
+
+##--------------API---------------------
+
+def accident_count_data(request):
+    if request.method == 'POST':
+        level = request.POST.get("level")
+
+    A1t = TrafficAccident.objects.filter(accidentLevel__contains= level )
 
 
     A1 = serializers.serialize("json", A1t,ensure_ascii=False )
 
     return HttpResponse(A1, content_type='application/json; charset=utf-8')
+
 
 def get_accident_level(request,id,*args,**kwargs,):
     yearMonth = id
