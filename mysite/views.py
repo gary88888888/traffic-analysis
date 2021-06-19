@@ -13,6 +13,9 @@ def index(request):
 def accident_count(request):
     return render(request,'accident_count.html',locals())
 
+def home(request):
+    return render(request,'home.html',locals())
+
 def trafficData_109(request):
     A1 = TrafficAccident.objects.filter(accidentLevel__contains='A1').count()
     A2 = TrafficAccident.objects.filter(accidentLevel__contains='A2').count()
