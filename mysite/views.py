@@ -5,7 +5,7 @@ from django.http import HttpResponse,JsonResponse
 from django.db.models import Q
 from django.views.decorators.csrf import csrf_exempt
 from django.core import serializers
-from mysite.models import TrafficAccident
+from mysite.models import TrafficAccident,SpeedMeasuring
 @csrf_exempt
 # Create your views here.
 def index(request):
@@ -102,4 +102,12 @@ def get_accident_trafficMap(request,*args,**kwargs,):
 
     data =  serializers.serialize("json", TrafficAccident.objects.filter(Q(accidentLevel__contains = level) & Q(yearMonth__contains = yearMonth) ),ensure_ascii=False )
 
+    return HttpResponse(data, content_type='application/json; charset=utf-8')
+
+
+def get_accident_camera(request,*args,**kwargs,):
+
+
+
+    data =  serializers.serialize("json", SpeedMeasuring.objects.all(),ensure_ascii=False )
     return HttpResponse(data, content_type='application/json; charset=utf-8')

@@ -30,6 +30,22 @@ class TrafficAccident(models.Model):
         return self.accidentID
 
 
+class SpeedMeasuring(models.Model):
+    cameraID = models.CharField(max_length=20)#相機編號
+    cameraType = models.CharField(max_length=20)#相機形式
+    location = models.CharField(max_length=20)#相機位置
+    direction = models.CharField(max_length=20)#測照方向
+    limit = models.CharField(max_length=20)#速限或違規
+    dist = models.CharField(max_length=20)#行政區
+    ViolationType = models.CharField(max_length=20)#違規測照形式
+    positionX = models.CharField(max_length=20)#相機編號
+    positionY = models.CharField(max_length=20)#相機編號
+    class Meta:
+        ordering = ('-cameraID',)
+
+    def __str__(self):
+        return self.cameraID
+
 
 
 

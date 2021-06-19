@@ -6,12 +6,11 @@
     {% load static %}
 
 
-    <div style="width:30vw;padding:5px">
-
+    <div style="width:80vw;padding:5px">
 
         <div class="row">
-            <div class="col-4"><h4>年月份</h4></div>
-            <div class="col-5">
+            <div class="col-2 text-right"><h4>年月份</h4></div>
+            <div class="col-2">
                 <select class="custom-select" id="yearMonth">
                     <option  selected value="1/">選擇年月份</option>
                     <option value="10901">109年1月</option>
@@ -19,36 +18,52 @@
                     <option value="10903">109年3月</option>
                     <option value="10904">109年4月</option>
                     <option value="10905">109年5月</option>
-                    <option value="10906/">109年6月</option>
-                    <option value="10907/">109年7月</option>
-                    <option value="10908/">109年8月</option>
-                    <option value="10909/">109年9月</option>
-                    <option value="10910/">109年10月</option>
-                    <option value="10911/">109年11月</option>
-                    <option value="10912/">109年12月</option>
-                    <option value="11001/">110年1月</option>
-                    <option value="11002/">110年2月</option>
-                    <option value="11003/">110年3月</option>
+                    <option value="10906">109年6月</option>
+                    <option value="10907">109年7月</option>
+                    <option value="10908">109年8月</option>
+                    <option value="10909">109年9月</option>
+                    <option value="10910">109年10月</option>
+                    <option value="10911">109年11月</option>
+                    <option value="10912">109年12月</option>
+                    <option value="11001">110年1月</option>
+                    <option value="11002">110年2月</option>
+                    <option value="11003">110年3月</option>
+                    <option value="">ALL(資料龐大，請注意)</option>
+
 
                 </select>
             </div>
 
         </div>
+
+
+
+
+
+
         <div class="row">
-            <div class="col-4"><h4>交通事故分級</h4></div>
-            <div class="col-5">
+            <div class="col-2 text-right"><h4>交通事故分級</h4></div>
+            <div class="col-2">
                 <select class="custom-select" id="level">
                     <option  selected>--交通事故分級--</option>
                     <option value="1">一級A1</option>
                     <option value="2">二級A2</option>
                     <option value="3">三級A3</option>
-
+                    <option value="">ALL(資料龐大，請注意)</option>
                 </select>
+            </div>
+            <div class="col-2">
+                <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="Check1">
+                <label class="form-check-label" for="defaultCheck1">
+                    違規照相與科技執法
+                </label>
+                </div>
             </div>
         </div>
          <div class="row">
             <div class="col">
-                <button id="submit" type="button" class="btn btn-primary" >查詢</button>
+                <button id="submit" type="button" class="btn btn-primary" >查詢 <div class="spinner-border spinner-border-sm" id="loading" role="status"></button>
                 <button id="toggleMarker" type="button" class="btn btn-primary" >標記開關</button>
                 <button id="toggleheatmap" type="button" class="btn btn-primary" >熱度開關</button>
 
@@ -59,6 +74,7 @@
 
 
     </div>
+
 
     <div id="map" style="height:70vh;weight:80vw;"></div>
 
@@ -75,11 +91,17 @@
     var level =''
     var dayNight = ''
     var marker;
+    var CameraMarker
     var markers=[];
+    var CameraMarkers=[];
+
     var isShow = false
+    var cameraCheck = false
+    var cameraData=[]
     {% load static %}
     {% block jquery %}
     $(document).ready(function(){
+    $("#loading").hide();
     $("#toggleheatmap").hide();
     $("#toggleMarker").hide();
      $('#toggleheatmap').on('click', function() {
@@ -106,57 +128,148 @@
         //accidentMap = accidentMap + this.value
 
     });
+    $("#Check1").change(function(){
+        var check = $(this).prop('checked');
+        if(check == true) {
+            $('.checkbox').prop('checked', true);
+            cameraCheck = true
+            console.log(cameraCheck)
+        } else {
+            $('.checkbox').prop('checked', false);
+            cameraCheck = false
+            console.log(cameraCheck)
+
+        }
+    });
+
+
     $('#submit').on('click', function() {
+        $("#loading").show();
+        $("#toggleheatmap").hide();
+        $("#toggleMarker").hide();
+        $('#submit').prop('disabled',true)
         var formData = new FormData();
         formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
         formData.append('yearMonth', yearMonth );
         formData.append('level', level );
 
 
-
-        for(var pair of formData.entries()) {
-        console.log(pair[0]+ ', '+ pair[1]);
-        }
         var $this = $(this);
         $this.button('loading');
+
+
+
+
+        if(cameraCheck == true){
+            console.log('ajax')
+            $.ajax({
+            type: 'GET',
+            url: '/api/data/get_accident_trafficMap/camera/',
+
+            success:function(res){
+                cameraData = res
+                console.log(cameraData)
+
+            }
+            })
+        }
         var accidentMap = '/api/data/get_accident_trafficMap/'
         $.ajax({
-        type: 'POST',
-        url: accidentMap,
-        data: formData,
-        cache: false,
-        processData : false,
-        // 告訴jQuery不要去設定Content-Type請求頭
-        contentType : false,
-        mimeType: "multipart/form-data",
+            type: 'POST',
+            url: accidentMap,
+            data: formData,
+            cache: false,
+            processData : false,
+            // 告訴jQuery不要去設定Content-Type請求頭
+            contentType : false,
+            mimeType: "multipart/form-data",
 
 
-        success:function(res,index){
-            $("#toggleheatmap").show();
-            $("#toggleMarker").show();
-            data =JSON.parse(res) ;
-            console.log(data[0].fields);
-            //x = data[0].fields.positionX;
-            //y = data[0].fields.positionY;
+            success:function(res,index){
+                $("#toggleheatmap").show();
+                $("#toggleMarker").show();
+                $("#loading").hide();
+                $('#submit').prop('disabled',false)
+                data =JSON.parse(res) ;
+                console.log(data[0].fields);
+                //x = data[0].fields.positionX;
+                //y = data[0].fields.positionY;
 
-            //centerLatLng ={lat:Number(x),lng:Number(y)};
-            console.log(centerLatLng)
-            initMap()
-            $this.button('reset');
-        }
+                //centerLatLng ={lat:Number(x),lng:Number(y)};
+                console.log(centerLatLng)
+                initMap()
+                $this.button('reset');
+            }
         })
+
+
+
     });
     })
+
+
     function initMap() {
         marker = null
+        CameraMarker = null
         markers = []
+        CameraMarkers = []
+
         map = null
         console.log('init')
         map = new google.maps.Map(document.getElementById('map'), {
             center:{lat:22.956175,lng:120.538326},
             zoom: 10
         });
+        if(cameraCheck == true){
+            for(var i =0 ;i < cameraData.length; i++){
+                console.log(cameraData[i])
+                CameraMarker = new google.maps.Marker({
+                position: new google.maps.LatLng(Number(cameraData[i].fields.positionX),Number(cameraData[i].fields.positionY)),
+                map: map,
+                optimized: true ,
+                icon:{
+                    url:"{% static 'img/camera.png' %}",
+                    scaledSize:new google.maps.Size(60,40)
+                }
+                });
+                CameraMarkers.push(CameraMarker)
+                var infowindow2 = new google.maps.InfoWindow({
+                maxWidth:500,
+                });
+                google.maps.event.addListener(CameraMarker, 'click', (function(CameraMarker, i) {
+                    var x = Number(cameraData[i].fields.positionX);
+                    var y = Number(cameraData[i].fields.positionY);
+                    return function() {
+                    infowindow2.setContent(
+                        '<div class="background" style="height:400px;width:400px">'+
+                        '<h6><span style="font-size: 1em; color: Tomato;"><i class="fas fa-exclamation-triangle"></i></span>執法編號 :'+cameraData[i].fields.cameraID +'</h6>'+
+                        '<h6><span style="font-size: 1em; color: Dodgerblue;"><i class="fas fa-clock"></i></span>類型 :'+cameraData[i].fields.cameraType +'</h6>'+
+                        '<h6><span style="font-size: 1em; color: #17b01c;"><i class="bi bi-geo-alt-fill"></i></span>執法地點 :'+cameraData[i].fields.location+'</h6>'+
+                        '<img src="https://maps.googleapis.com/maps/api/streetview?location='+ x +','+ y +'&size=400x300&key=AIzaSyAXwg6KijAC7iPNlT9UTBiuQNSOVi5LWcc" >'+
+                        '</div>'
+                        );
+                    infowindow2.open(map, CameraMarker);
 
+                    const panorama2 = new google.maps.StreetViewPanorama(
+                        document.getElementById("pano"),
+                        {
+                        position: new google.maps.LatLng(Number(cameraData[i].fields.positionX),Number(cameraData[i].fields.positionY)),
+                        pov: {
+                            heading: 34,
+                            pitch: 10,
+                        },
+                        }
+                    );
+                    map.setStreetView(panorama2);
+                    }
+                })(CameraMarker, i));
+
+
+            }
+
+
+
+        }
 
 
         for(var i =0 ;i < data.length; i++){
@@ -203,11 +316,18 @@
                 var y = Number(data[i].fields.positionY.replace('?',''));
                 return function() {
                 infowindow.setContent(
-                    '<div class="background" style="height:400px;width:400px">'+
+                    '<div class="background" style="height:400px;width:400px;padding:5px;">'+
                     '<h6><span style="font-size: 1em; color: Tomato;"><i class="fas fa-exclamation-triangle"></i></span>事故等級 :'+data[i].fields.accidentLevel.replace('?','') +'</h6>'+
                     '<h6><span style="font-size: 1em; color: Dodgerblue;"><i class="fas fa-clock"></i></span>事故時間點 :'+data[i].fields.accidentTime.replace('?','') +'</h6>'+
                     '<h6><span style="font-size: 1em; color: #17b01c;"><i class="bi bi-geo-alt-fill"></i></span>事故地點 :'+data[i].fields.dist.replace('?','') +data[i].fields.streetRoad.replace('?','') +'</h6>'+
-                    '<img src="https://maps.googleapis.com/maps/api/streetview?location='+ x +','+ y +'&size=400x300&key=AIzaSyAXwg6KijAC7iPNlT9UTBiuQNSOVi5LWcc" >'+
+                    '<h6><span style="font-size: 1em; color: #9942f5;"><i class="bi bi-file-earmark-spreadsheet"></i></span>事故原因 :'+data[i].fields.accidentType.replace('?','')+'</h6>'+
+                    '<h6><span style="font-size: 1em; color: #42bcf5;"><i class="bi bi-cloud-fill"></i></span>天氣 :'+data[i].fields.whether.replace('?','')+'</h6>'+
+                    '<h6><span style="font-size: 1em; color: #f5e042;"><i class="bi bi-lightbulb-fill"></i></span>光線 :'+data[i].fields.light.replace('?','')+'</h6>'+
+
+
+                    '<div class="img" style="text-align:center;">'+
+                        '<img src="https://maps.googleapis.com/maps/api/streetview?location='+ x +','+ y +'&size=320x240&key=AIzaSyAXwg6KijAC7iPNlT9UTBiuQNSOVi5LWcc" >'+
+                    '</div>'+
                     '</div>'
                     );
                 infowindow.open(map, marker);
@@ -238,7 +358,7 @@
         ];
         var heatposition=[]
         for(var i =0 ;i < data.length; i++){
-            heatposition.push({'location': new google.maps.LatLng(Number(data[i].fields.positionX.replace('?','')),Number(data[i].fields.positionY.replace('?',''))), 'weight': 10})
+            heatposition.push({'location': new google.maps.LatLng(Number(data[i].fields.positionX.replace('?','')),Number(data[i].fields.positionY.replace('?',''))), 'weight': 2})
 
 
 
@@ -252,6 +372,8 @@
         })
 
         marker.setMap(map);
+        CameraMarker.setMap(map);
+
     };
     function initHeatMap(){
 
@@ -283,7 +405,6 @@
             markers[i].setMap(map);
         }
     }
-
 
 
     {% endblock jquery %}
