@@ -95,12 +95,14 @@ def get_accident_trafficMap(request,*args,**kwargs,):
     if request.method == 'POST':
         yearMonth = request.POST.get("yearMonth")
         level = request.POST.get("level")
+        weather = request.POST.get("weather")
 
 
 
 
 
-    data =  serializers.serialize("json", TrafficAccident.objects.filter(Q(accidentLevel__contains = level) & Q(yearMonth__contains = yearMonth) ),ensure_ascii=False )
+
+    data =  serializers.serialize("json", TrafficAccident.objects.filter(Q(accidentLevel__contains = level) & Q(yearMonth__contains = yearMonth)  & Q(weather__contains = weather)),ensure_ascii=False )
 
     return HttpResponse(data, content_type='application/json; charset=utf-8')
 

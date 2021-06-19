@@ -14,7 +14,7 @@ class TrafficAccident(models.Model):
     roadType = models.CharField(max_length=200)#道路型態說明    ex.直路 or 岔路
     light = models.CharField(max_length=200)#光線說明    ex.日間自然光線
     accidentType = models.CharField(max_length=200)#事故類型及型態說明    ex.側撞
-    whether = models.CharField(max_length=200)#天候說明    ex.晴
+    weather = models.CharField(max_length=200)#天候說明    ex.晴
     deathNum = models.CharField(max_length=200)#死亡人數    ex.1
     injuryNum = models.CharField(max_length=200)#受傷人數   ex.1
     roadStatus = models.CharField(max_length=200)#路面狀態說明    ex.乾燥

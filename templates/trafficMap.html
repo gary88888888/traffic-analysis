@@ -9,7 +9,7 @@
     <div style="width:80vw;padding:5px">
 
         <div class="row">
-            <div class="col-2 text-right"><h4>年月份</h4></div>
+            <label for="yearMonth" class="col-sm-1 col-form-label">事故年月</label>
             <div class="col-2">
                 <select class="custom-select" id="yearMonth">
                     <option  selected value="1/">選擇年月份</option>
@@ -33,7 +33,18 @@
 
                 </select>
             </div>
+            <label for="weather" class="col-sm-1 col-form-label">天氣型態</label>
+            <div class="col-2">
+                <select class="custom-select" id="weather">
+                    <option  selected value="">選擇天氣型態</option>
+                    <option value="風沙">風沙</option>
+                    <option value="霧或煙">霧或煙</option>
+                    <option value="雨">雨</option>
+                    <option value="晴">晴</option>
 
+
+                </select>
+            </div>
         </div>
 
 
@@ -42,7 +53,8 @@
 
 
         <div class="row">
-            <div class="col-2 text-right"><h4>交通事故分級</h4></div>
+            <label for="level" class="col-sm-1 col-form-label">事故分級</label>
+
             <div class="col-2">
                 <select class="custom-select" id="level">
                     <option  selected>--交通事故分級--</option>
@@ -52,12 +64,11 @@
                     <option value="">ALL(資料龐大，請注意)</option>
                 </select>
             </div>
+            <label class="form-check-label" for="Check1">違規照相與科技執法</label>
             <div class="col-2">
                 <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="" id="Check1">
-                <label class="form-check-label" for="defaultCheck1">
-                    違規照相與科技執法
-                </label>
+
                 </div>
             </div>
         </div>
@@ -89,7 +100,7 @@
     var position;
     var yearMonth = '';
     var level =''
-    var dayNight = ''
+    var weather = ''
     var marker;
     var CameraMarker
     var markers=[];
@@ -123,8 +134,8 @@
         //accidentMap = accidentMap + this.value
 
     });
-    $('#dayNight').on('change', function() {
-        dayNight = this.value
+    $('#weather').on('change', function() {
+        weather = this.value
         //accidentMap = accidentMap + this.value
 
     });
@@ -152,6 +163,9 @@
         formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
         formData.append('yearMonth', yearMonth );
         formData.append('level', level );
+        formData.append('weather', weather );
+
+
 
 
         var $this = $(this);
@@ -243,8 +257,13 @@
                     infowindow2.setContent(
                         '<div class="background" style="height:400px;width:400px">'+
                         '<h6><span style="font-size: 1em; color: Tomato;"><i class="fas fa-exclamation-triangle"></i></span>執法編號 :'+cameraData[i].fields.cameraID +'</h6>'+
-                        '<h6><span style="font-size: 1em; color: Dodgerblue;"><i class="fas fa-clock"></i></span>類型 :'+cameraData[i].fields.cameraType +'</h6>'+
+                        '<h6><span style="font-size: 1em; color: Dodgerblue;"><i class="bi bi-camera-fill"></i></span>機器類型 :'+cameraData[i].fields.cameraType +'</h6>'+
+                        '<h6><span style="font-size: 1em; color: Dodgerblue;"><i class="bi bi-speedometer2"></i></span>違規類型 :'+cameraData[i].fields.ViolationType +'</h6>'+
                         '<h6><span style="font-size: 1em; color: #17b01c;"><i class="bi bi-geo-alt-fill"></i></span>執法地點 :'+cameraData[i].fields.location+'</h6>'+
+                        '<h6><span style="font-size: 1em; color: #17b01c;"><i class="bi bi-geo-alt-fill"></i></span>執法方向 :'+cameraData[i].fields.direction+'</h6>'+
+                        '<h6><span style="font-size: 1em; color:red;"><i class="bi bi-speedometer"></i></span>速限 :'+cameraData[i].fields.limit+'</h6>'+
+
+
                         '<img src="https://maps.googleapis.com/maps/api/streetview?location='+ x +','+ y +'&size=400x300&key=AIzaSyAXwg6KijAC7iPNlT9UTBiuQNSOVi5LWcc" >'+
                         '</div>'
                         );
@@ -267,6 +286,7 @@
 
             }
 
+        CameraMarker.setMap(map);
 
 
         }
@@ -321,7 +341,7 @@
                     '<h6><span style="font-size: 1em; color: Dodgerblue;"><i class="fas fa-clock"></i></span>事故時間點 :'+data[i].fields.accidentTime.replace('?','') +'</h6>'+
                     '<h6><span style="font-size: 1em; color: #17b01c;"><i class="bi bi-geo-alt-fill"></i></span>事故地點 :'+data[i].fields.dist.replace('?','') +data[i].fields.streetRoad.replace('?','') +'</h6>'+
                     '<h6><span style="font-size: 1em; color: #9942f5;"><i class="bi bi-file-earmark-spreadsheet"></i></span>事故原因 :'+data[i].fields.accidentType.replace('?','')+'</h6>'+
-                    '<h6><span style="font-size: 1em; color: #42bcf5;"><i class="bi bi-cloud-fill"></i></span>天氣 :'+data[i].fields.whether.replace('?','')+'</h6>'+
+                    '<h6><span style="font-size: 1em; color: #42bcf5;"><i class="bi bi-cloud-fill"></i></span>天氣 :'+data[i].fields.weather.replace('?','')+'</h6>'+
                     '<h6><span style="font-size: 1em; color: #f5e042;"><i class="bi bi-lightbulb-fill"></i></span>光線 :'+data[i].fields.light.replace('?','')+'</h6>'+
 
 
@@ -372,7 +392,6 @@
         })
 
         marker.setMap(map);
-        CameraMarker.setMap(map);
 
     };
     function initHeatMap(){
