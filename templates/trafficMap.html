@@ -64,7 +64,7 @@
                     <option value="">ALL(資料龐大，請注意)</option>
                 </select>
             </div>
-            <label class="form-check-label" for="Check1">違規照相與科技執法</label>
+            <label class="col-sm-2 col-form-label" for="Check1">違規照相與科技執法</label>
             <div class="col-2">
                 <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="" id="Check1">
@@ -123,13 +123,13 @@
      })
     $('#yearMonth').on('change', function() {
         yearMonth = this.value
-        console.log(yearMonth)
+
         //var accidentMap = '/api/data/get_accident_trafficMap/' + this.value
 
     });
     $('#level').on('change', function() {
         level = this.value
-        console.log(level)
+
 
         //accidentMap = accidentMap + this.value
 
@@ -144,11 +144,11 @@
         if(check == true) {
             $('.checkbox').prop('checked', true);
             cameraCheck = true
-            console.log(cameraCheck)
+
         } else {
             $('.checkbox').prop('checked', false);
             cameraCheck = false
-            console.log(cameraCheck)
+
 
         }
     });
@@ -175,14 +175,14 @@
 
 
         if(cameraCheck == true){
-            console.log('ajax')
+
             $.ajax({
             type: 'GET',
             url: '/api/data/get_accident_trafficMap/camera/',
 
             success:function(res){
                 cameraData = res
-                console.log(cameraData)
+
 
             }
             })
@@ -205,12 +205,6 @@
                 $("#loading").hide();
                 $('#submit').prop('disabled',false)
                 data =JSON.parse(res) ;
-                console.log(data[0].fields);
-                //x = data[0].fields.positionX;
-                //y = data[0].fields.positionY;
-
-                //centerLatLng ={lat:Number(x),lng:Number(y)};
-                console.log(centerLatLng)
                 initMap()
                 $this.button('reset');
             }
@@ -229,14 +223,14 @@
         CameraMarkers = []
 
         map = null
-        console.log('init')
+
         map = new google.maps.Map(document.getElementById('map'), {
             center:{lat:22.956175,lng:120.538326},
             zoom: 10
         });
         if(cameraCheck == true){
             for(var i =0 ;i < cameraData.length; i++){
-                console.log(cameraData[i])
+
                 CameraMarker = new google.maps.Marker({
                 position: new google.maps.LatLng(Number(cameraData[i].fields.positionX),Number(cameraData[i].fields.positionY)),
                 map: map,
@@ -419,7 +413,7 @@
     }
 
     function setMapOnAll(map) {
-        console.log(markers)
+
         for (let i = 0; i < markers.length; i++) {
             markers[i].setMap(map);
         }

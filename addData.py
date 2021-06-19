@@ -33,7 +33,7 @@ lists = [
 
 
 # json_dict = json.loads(resp.text)
-user_agent = UserAgent()
+user_agent = UserAgent() #偽使用者
 delay_choices = [8, 7, 10, 13, 20, 11]  #延遲的秒數
 delay = random.choice(delay_choices)  #隨機選取秒數
 # print(data)

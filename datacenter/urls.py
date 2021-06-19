@@ -18,16 +18,20 @@ from django.contrib import admin
 from django.urls import path
 from mysite.views import index, trafficData_109, trafficData_110, get_accident_level, trafficMap, get_accident_trafficMap,get_accident_trafficMap_yearMonth,get_accident_trafficMap_yearMonth_level,accident_count,accident_count_data,get_accident_camera,home
 
+from mysite.views import get_accident_type,accident_type
 
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index),
+    path('home/',home),
     path('trafficData_109/',trafficData_109),
     path('trafficData_110/',trafficData_110),
     path('trafficMap/',trafficMap),
     path('accident_count/',accident_count),
+    path('accident_type/',accident_type),
+
 
 
     path('api/data/get_accident_level/<int:id>/',get_accident_level , name="api-data"),
@@ -36,6 +40,8 @@ urlpatterns = [
     path('api/data/get_accident_trafficMap/',get_accident_trafficMap , name="api-data-2"),
     path('api/data/get_accident_trafficMap/camera/',get_accident_camera , name="api-data-camera"),
     path('api/data/get_accident_count_datatestdata/',accident_count_data,name="get_accident_count_datatestdata"),
+    path('api/data/get_accident_type/',get_accident_type,name="get_accident_type"),
 
-    path('home/',home),
+
+
 ]

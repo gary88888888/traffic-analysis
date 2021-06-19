@@ -1,0 +1,101 @@
+{% extends 'nav.html' %}
+{% block content %}
+<div class="chart-wrap">
+    <div id="chart"></div>
+</div>
+
+{% endblock content %}
+
+<script>
+{% block jquery %}
+var data =[]
+
+$(document).ready(function(){
+
+
+    $.ajax({
+        method:"GET",
+        url:' /api/data/get_accident_type/',
+        success:function(res,index){
+
+
+
+
+
+
+
+
+
+
+
+
+           data.push(res['chase'],res['Crossroads'],res['Rollover'],res['Traverse'],res['Hit_guardrail'],res['Hit_sign'],res['Hit_bridge'],res['Hit_construction'],
+                    res['Hit_animal'],res['Approach_road'],res['Hit_Non_fixed_facilities'],res['Collision'],res['Opposite_traffic'],res['Opposite_Scratch'],res['Scratch'],res['others'],res['Side_collision'],res['Stop_side'],res['Astern_hit'],res['Hit_tree'],res['Hit_Separate_island']);
+           console.log(data)
+
+
+
+           var chart = new ApexCharts(document.querySelector("#chart"), options);
+            chart.render();
+        }
+    })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var options = {
+          series: data,
+
+          labels:['追撞','路口交岔撞','路上翻車','穿越道路中','撞護欄','撞號誌','撞橋梁','撞工程施工','撞動物','接近路中','撞非固定設施','對撞','對向通行中','對向擦撞','其他','同向擦撞','側撞','停立路邊','倒車撞','撞路樹','撞交通島'],
+
+          chart: {
+          width: 700,
+          type: 'donut'
+
+            },
+        dataLabels: {
+          enabled: true,
+          formatter: function (val, opt) { return opt.w.config.labels[opt.seriesIndex] + " " + Math.round(val)+"%" }
+        },
+        responsive: [{
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200
+            },
+            legend: {
+              position: 'bottom'
+            }
+          }
+        }],
+        legend: {
+          position: 'right',
+          offsetY: 0,
+          height: 400,
+          fontSize: '20px',
+        }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chart"), options);
+        chart.render();
+
+
+
+
+
+})
+{% endblock jquery %}
+</script>
