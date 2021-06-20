@@ -24,7 +24,7 @@ a, a:hover, a:focus {
 }
 
 .navbar {
-    padding: 15px 10px;
+    padding: 5px 10px;
     background-color: #9BB9D6;
     opacity: 0.7;
     border: none;
@@ -338,8 +338,8 @@ a.article, a.article:hover {
     background-color:#fff;
     border:2px #003C9D solid;
   } */
-  .btn
-  {
+.btn
+{
     position: relative;
     text-align: center;
     font-family: monospace;
@@ -351,15 +351,24 @@ a.article, a.article:hover {
     text-decoration: none;
     transition: 0.2s;
     border-radius: 25px;
-  }
-  .btn:hover
-  {
+}
+.btn:hover
+{
     letter-spacing: 6px;
     color:#fff;
     background-color: coral;
     border:2px #fff solid;
-  }
-  .enterbtn
-  {
+}
+.enterbtn
+{
     border:2px coral solid;
-  }
+}
+.marquee-news
+{
+    position: relative;
+    font-family: 'Noto Sans TC', sans-serif;
+    top: 6px;
+    font-size: 25px;
+    color: rgb(27, 23, 23);
+
+}
