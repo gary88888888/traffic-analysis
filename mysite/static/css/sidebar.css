@@ -236,3 +236,132 @@ a.article, a.article:hover {
     }
 
 }
+<<<<<<< HEAD
+=======
+
+/* ---------------------------------------------------
+    vid_index
+----------------------------------------------------- */
+*
+{
+    margin: 0;
+    padding: 0;
+}
+.home
+{
+    background: rgba(150, 150, 150, 0.55);
+    height: 100vh;
+}
+.video-background
+{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -1;
+}
+@media (min-aspect-ratio:16/9)
+{
+    .video-background
+    {
+        width: 100%;
+        height: auto;
+    }
+}
+@media (max-aspect-ratio:16/9)
+{
+    .video-background
+    {
+        width: auto;
+        height: 100%;
+    }
+}
+.welcome-msg
+{
+    position: relative;
+    text-align: center;
+    font-family: 'Dela Gothic One', cursive;
+    color: #fff;
+    top: 100px;
+}
+.welcome-msg h1
+{
+    font-size: 45px;
+    font-weight: bold;
+    letter-spacing: 15px;
+}
+.logo
+{
+    position: absolute;
+    top: 0;
+    margin: 15px;
+    height: 40px;
+}
+.welcome-title
+{
+    position: relative;
+    text-align: center;
+    font-family: monospace;
+    color: #fff;
+    top: 45px;
+    margin: 50px;
+}
+.welcome-title h1
+{
+    font-size: 60px;
+    font-weight: bold;
+    letter-spacing: 5px;
+}
+.footer
+{
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 2.5rem;  
+}
+/* .enterbtn
+{
+    font-family: monospace;
+    font-size: 25px;
+    margin: 30px;
+    border:0;
+    background-color:#003C9D;
+    color:#fff;
+    border-radius:10px;
+    cursor:pointer;}
+
+    input:hover{
+    color:#003C9D;
+    background-color:#fff;
+    border:2px #003C9D solid;
+  } */
+  .btn
+  {
+    position: relative;
+    text-align: center;
+    font-family: monospace;
+    color: #fff;
+    top: 50px;
+    margin: 50px;
+    font-size: 30px;
+    padding: 7px 22px;
+    text-decoration: none;
+    transition: 0.2s;
+    border-radius: 25px;
+  }
+  .btn:hover
+  {
+    letter-spacing: 6px;
+    color:#fff;
+    background-color: coral;
+    border:2px #fff solid;
+  }
+  .enterbtn
+  {
+    border:2px coral solid;
+  }
+>>>>>>> 2eaa546 (add index, lfs)
