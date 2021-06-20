@@ -10,10 +10,7 @@ from mysite.models import TrafficAccident,SpeedMeasuring
 # Create your views here.
 def index(request):
     return render(request,'index.html',locals())
-<<<<<<< HEAD
-=======
 
->>>>>>> 2eaa546 (add index, lfs)
 def accident_count(request):
     return render(request,'accident_count.html',locals())
 
