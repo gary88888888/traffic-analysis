@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path
-from mysite.views import get_accident_trafficMap,get_accident_trafficMap_yearMonth,get_accident_trafficMap_yearMonth_level
+from mysite.views import get_accident_trafficMap,get_accident_trafficMap_yearMonth,get_accident_trafficMap_yearMonth_level, index
 from mysite.views import  trafficData_109, trafficData_110, get_accident_level, trafficMap,accident_count,accident_count_data,get_accident_camera,home,about
 from mysite.views import get_accident_type,accident_type
 
@@ -24,7 +24,7 @@ from mysite.views import get_accident_type,accident_type
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', home),
+    path('', index),
     path('home/',home),
     path('about/',about),
     path('trafficData_109/',trafficData_109),
