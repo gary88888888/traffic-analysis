@@ -1,5 +1,55 @@
+<!DOCTYPE html>
 
-{% extends 'nav.html' %}
-{% block content %}
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>KTA高雄交通事故分析</title>
+        <!-- Our Custom CSS -->
+        {% comment %} <link rel="stylesheet" href="style5.css"> {% endcomment %}
+        {% load static %}
+        <link rel="stylesheet"   href=" {% static 'css/sidebar.css' %}">
+        <link rel="shortcut icon" href="{%  static 'python.png' %}">
+        <link rel="stylesheet" herf="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+        <link herf="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&display=swap" rel="stylesheet">
+        
+        <!-- <style>
+            body{
+                background: no-repeat center center fixed;
+                /* background: url('{% static "img\666.jpg" %}') no-repeat center center fixed; */
+                -webkit-background-size: cover;
+                -moz-background-size: cover;
+                -o-background-size: cover;
+                background-size: cover;
+            }
+        </style> -->
+        <section class="home">
+            <video autoplay loop class="video-background" muted plays-inline>
+                <source src='{% static "video/city_road_merge.mp4" "video/mp4" %}'>
+            </video>
 
-{% endblock content %}
+            
+            <div class="welcome-msg">
+                <h1>WELCOME!</h1>
+                <div class="welcome-title"><h1><u>高雄交通事故分析網站</u></h1></div>
+                <!-- <a herf="#" class="index-btn btn-enter"></a> -->
+                <!-- <input class=enterbtn type="button" value="進入網站" name="按鈕名稱" style="width:150px;height:50px;"> -->
+                <a href="/home" class="btn enterbtn">進入網站</a>
+            </div>
+            <img src="{%  static 'python.png' %}" class="logo">
+            
+            {% include "footer.html" %}
+        </section>
+
+    </head>
+
+    <body>
+        
+        
+
+    </body>
+</html>
+
