@@ -4,16 +4,19 @@
 
 <div id="chart"></div>
 
-<div class="row">
-    <div class="col-4"><h4>交通事故分級</h4></div>
-    <div class="col-5">
+<div class="row justify-content-md-center">
+
+    <label for="level" class="col-md-2 col-form-label"><h3>交通事故分級</h3></label>
+    <div class="col-3">
         <select class="custom-select" id="level">
             <option  selected>--交通事故分級--</option>
             <option value="1">一級A1</option>
             <option value="2">二級A2</option>
             <option value="3">三級A3</option>
         </select>
-        <button id="submit" type="button" class="btn btn-primary" >查詢</button>
+    </div>
+    <div class="col-2">
+        <button id="submit" type="button" class="btn btn-primary" >查詢 <div class="spinner-border spinner-border-sm" id="loading" role="status"></div></button>
     </div>
 </div>
 
@@ -31,6 +34,7 @@ var chartData=[]
 var count
 var current = null
 $(document).ready(function(){
+$("#loading").hide();
 $('#level').on('change', function() {
         level = this.value
         console.log(level)
@@ -41,6 +45,8 @@ $('#level').on('change', function() {
 
 
 $('#submit').on('click', function() {
+        $("#loading").show();
+        $('#submit').prop('disabled',true)
         var formData = new FormData();
         formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
 
@@ -49,8 +55,7 @@ $('#submit').on('click', function() {
 
 
 
-        var $this = $(this);
-        $this.button('loading');
+
         var accidentMap = '/api/data/get_accident_count_datatestdata/'
         $.ajax({
         type: 'POST',
@@ -64,6 +69,8 @@ $('#submit').on('click', function() {
 
 
         success:function(res,index){
+            $("#loading").hide();
+            $('#submit').prop('disabled',false)
             dayData = []
             chartData = []
             current = null

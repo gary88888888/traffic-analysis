@@ -8,6 +8,12 @@ from django.core import serializers
 from mysite.models import TrafficAccident,SpeedMeasuring
 @csrf_exempt
 # Create your views here.
+
+=======
+def index(request):
+    return render(request,'index.html',locals())
+
+
 def accident_count(request):
     return render(request,'accident_count.html',locals())
 

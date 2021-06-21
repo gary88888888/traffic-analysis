@@ -9,7 +9,7 @@ from mysite.models import SpeedMeasuring
 my_path = os.path.abspath(os.path.dirname(__file__))
 path = os.path.join(my_path, "data.csv")
 
-with open(path) as csvfile:
+with open(path ,"r") as csvfile:
 	rows = csv.reader(csvfile, delimiter=",")
 	for d in rows:
 		print(d[0], d[2])
