@@ -16,6 +16,7 @@
     <!-- Our Custom CSS -->
     {% comment %} <link rel="stylesheet" href="style5.css"> {% endcomment %}
     {% load static %}
+    
     <link rel="stylesheet"   href=" {% static 'css/sidebar.css' %}">
     <link rel="shortcut icon" href="{%  static 'python.png' %}">
     <!-- Font Awesome JS -->
@@ -42,8 +43,8 @@
                     <a href="/home" ><i class="fas fa-home"></i> Home</a>
                     
                 </li>
-                <li>
-                    <a  style="padding-left:12px;" href="#"><i class="fas fa-align-justify"></i>  News</a>
+                <li> 
+                    <a  style="padding-left:12px;" href="/news"><i class="fas fa-align-justify"></i>  News</a>
 
                     <a href="#pageSubmenu01" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="bi bi-collection-fill"></i> Data</a>
 

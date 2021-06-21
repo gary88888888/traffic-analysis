@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'mysite',#將APP名稱放進來,
     'import_export',
+    'news_api.apps.NewsApiConfig', 
 ]
 
 MIDDLEWARE = [
