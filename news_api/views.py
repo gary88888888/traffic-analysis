@@ -9,27 +9,58 @@ def news(request):
     url = f'https://newsapi.org/v2/top-headlines?country=tw&apiKey={API_KEY}'
     response = requests.get(url)
     data = response.json()
-    
-    articles = data['articles']
 
+    articlesi = data['articles']
 
-    context = {
-        'articles' : articles
+    contexti = {
+        'articles' : articlesi
     }
+        
+    return render(request, 'news_api/news.html', contexti)
 
-    return render(request, 'news_api/news.html', context)
+# def news(request):
+#     url = f'https://newsapi.org/v2/top-headlines?country=tw&category=health&apiKey={API_KEY}'
+#     response = requests.get(url)
+#     data = response.json()
 
-    # articles = data['articles']
+#     articlesj = data['articles']
 
-    # context = {
-    #     'articles' : articles
-    # }
+#     contextj = {
+#         'articles' : articlesj
+#     }
+        
+#     return render(request, 'news_api/news.html', contextj)
+
+# def news(request):
+#     url = f'https://newsapi.org/v2/top-headlines?country=tw&category=sports&apiKey={API_KEY}'
+#     response = requests.get(url)
+#     data = response.json()
+
+#     articlesk = data['articles']
+
+#     contextk = {
+#         'articles' : articlesk
+#     }
+        
+#     return render(request, 'news_api/news.html', contextk)
 
 
-    # title = articles['title']
+    # context = print(type(data['articles']))
+    # print(data)
 
-    # context = {
-    #     'title' : title
-    # }
+    # for i in data['articles']: #yes
+    #     print(i['source'])
 
-    # return render(request, 'news_api/news.html', context)
+    # for i in data['articles']: #yes
+    #     print(i['description'])
+
+    # for item in data['articles']['description']: #shit
+    #     print(item)
+
+    # for item in data['articles']: #yes
+    #     for item2 in item:
+    #         print(item2)
+
+    # for description in data['articles']: #yes
+    #     print(i['description'])
+
