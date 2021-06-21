@@ -1,6 +1,38 @@
 {% extends 'nav.html' %}
 {% block content %}
 
+</head>
+  <body>
+    <div style="text-align:center"><h2>首頁</h2></div>
+
+    <div class='container'>
+        <div class="row justify-content-center">
+        <div class="row">
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" onclick="this.parentNode.parentNode.removeChild(this.parentNode);" class="close" data-dismiss="alert">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">Close</span></button>
+                <strong>
+                    <i class="fa fa-warning"></i>警語</strong>
+                <marquee>
+                    <p style="font-family: Impact; font-size: 26pt">喝酒不開車  開車不喝酒</p></marquee>
+            </div>
+        </div>
+    </div>
+
+
+    <table>
+        <div style="text-align:start"><h2>資料來源</h2></div>
+            <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="https://cabu.kcg.gov.tw/Stat/StatRpts/StatRpt1.aspx">高雄民政局人口統計</a></li>
+            </ul>
+            <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="http://kppgis.tw/Default.aspx">高雄警察局交通事故開放資料</a></li>
+            </ul>
+    </table>
+
+=======
+
 <head>
 </head>
 <body>
@@ -24,4 +56,5 @@
         <tr><td>資料蒐集 <u>楷笙</u></tr></td colspan=6> 
     </table>
 </body> 
+
 {% endblock %}

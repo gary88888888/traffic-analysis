@@ -8,14 +8,20 @@ from django.core import serializers
 from mysite.models import TrafficAccident,SpeedMeasuring
 @csrf_exempt
 # Create your views here.
+
+=======
 def index(request):
     return render(request,'index.html',locals())
+
 
 def accident_count(request):
     return render(request,'accident_count.html',locals())
 
 def home(request):
     return render(request,'home.html',locals())
+
+def about(request):
+    return render(request,'about.html',locals())
 
 def trafficData_109(request):
     A1 = TrafficAccident.objects.filter(accidentLevel__contains='A1').count()
@@ -44,14 +50,6 @@ def trafficMap(request):
     return render(request,'trafficMap.html',locals())
 def accident_type(request):
     return render(request,'accident_type_chart.html',locals())
-
-
-
-
-
-
-
-
 
 
 ##--------------API---------------------
