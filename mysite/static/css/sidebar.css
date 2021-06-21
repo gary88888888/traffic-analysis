@@ -372,3 +372,38 @@ a.article, a.article:hover {
     color: rgb(27, 23, 23);
 
 }
+#fbi_warning
+{
+    font-size: 25px;
+    position: relative;
+    text-align: center;
+    font-family: 'Archivo Black', sans-serif;
+    color: red;
+}
+#warning_text
+{
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: 25px;
+    position: relative;
+    text-align: center;
+    color: rgb(27, 23, 23);
+}
+.popup .warning_content
+{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width:480px;
+    height:280px;
+    z-index: 1;
+    text-align: center;
+    padding: 20px;
+    box-sizing: borde-box;
+}
+.close-btn
+{
+    position: relative;
+    font-size: 40px;
+    left: -15px;
+}
