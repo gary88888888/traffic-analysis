@@ -4,7 +4,9 @@
   <body>
     <div style="text-align:center"><h2>關於</h2></div>
     <table class='table table-striped table-light'>
-        <tr>網站功能:</tr>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item active">網站功能</li>
+        </ol>
         <tr><td colspan=6>1.透過資料庫來過濾出高雄部分區域的危險路口</td></tr>
         <tr><td>2.透過圖表(長條圖)來顯示高雄部分區域的交通事故的時間關係</tr></td colspan=6>    
         <tr><td colspan=6>3.固定違規照相與&科技執法路段與危險路口關係</td></tr>  
@@ -14,11 +16,48 @@
     </table>
     <tr></tr>
     <table class='table table-striped table-light'>
-        <tr>工作分配:</tr>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item active">工作分配</li>
+        </ol>
         <tr><td colspan=6>排版設計 晉璿</td></tr>
         <tr><td>網站設計結構方向 巧芸、薇芯</tr></td colspan=6>    
         <tr><td colspan=6>資料庫彙整 佳昱</td></tr>  
         <tr><td>資料蒐集 楷笙</tr></td colspan=6>   
     </table>
-      
+
+    <div id="accordion">
+        <div class="card">                   
+          <div class="card-header">          
+            <a class="collapsed card-link" data-toggle="collapse" href="#demo1">
+              網站功能
+            </a>
+          </div>
+          <div id="demo1" class="collapse" data-parent="#accordion">  
+            <div class="card-body">          
+                <div>1.透過資料庫來過濾出高雄部分區域的危險路口</div>
+                <div>2.透過圖表(長條圖)來顯示高雄部分區域的交通事故的時間關係</div>    
+                <div>3.固定違規照相與&科技執法路段與危險路口關係</div>  
+                <div>4.Google map 標記點(較為困難)</div>   
+                <div>5.交通事故與氣候關係</div>
+                <div>6.道路型態發生車禍事故之圓餅圖* ， 車禍型態->分析是不是交通壅塞(側撞)</div>
+            </div>
+          </div>
+        </div>
+
+        <div id="accordion">
+            <div class="card">                   
+              <div class="card-header">          
+                <a class="collapsed card-link" data-toggle="collapse" href="#demo2">
+                  工作分配
+                </a>
+              </div>
+              <div id="demo2" class="collapse" data-parent="#accordion">  
+                <div class="card-body">          
+                    <div>排版設計 晉璿</div>
+                    <div>網站設計結構方向 巧芸、薇芯</div>    
+                    <div>資料庫彙整 佳昱</div>  
+                    <div>資料蒐集 楷笙</div>   
+                </div>
+              </div>
+            </div>
 {% endblock %}
