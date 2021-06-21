@@ -1,0 +1,37 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300&display=swap" rel="stylesheet">  
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet">
+    
+    {% load static %}
+    <div class="popup" id="popup-1">
+            <div class="warning_content">
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" onclick="this.parentNode.parentNode.removeChild(this.parentNode);" class="close" data-dismiss="alert">
+                        <a class="close-btn" aria-hidden="true">×</a>
+                    </button>
+                    <h1 id="fbi_warning">FBI WARNING</h1>
+                    <ul class="demo" id="warning_text">
+                        <li><a>開車不喝酒！</a></li>
+                        <li><a>喝酒不開車！</a></li>
+                        <li><a>逞一時之快！</a></li>
+                        <li><a>七天後回家！</a></li>
+                    </ul>
+                </div>
+            </div>
+    </div>
+    <style>
+        ul.demo {
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+        }
+    </style>
+</head>
+<body>
+    
+</body>
+</html>
