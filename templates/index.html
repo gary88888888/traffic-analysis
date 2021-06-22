@@ -15,7 +15,6 @@
         <link herf="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&display=swap" rel="stylesheet">
-
         <!-- <style>
             body{
                 background: no-repeat center center fixed;
@@ -27,11 +26,11 @@
             }
         </style> -->
         <section class="indexhome">
-            <video autoplay loop class="video-background" muted plays-inline>
-                <source src='{% static "video/city_road_622.mp4" "video/mp4" %}'>
-            </video>
-
-
+            {% comment %} <video autoplay loop class="video-background" muted plays-inline>
+                <source src='https://www.youtube.com/embed/JbF-kl0M6kI?ecver=1&controls=0&showinfo=0&rel=0&autoplay=1&loop=1&mute=1" frameborder="0" allowfullscreen'>
+            </video> {% endcomment %}
+{% comment %} <iframe src="https://player.vimeo.com/video/565902683" class="video-background" frameborder="0" allow="autoplay; fullscreen; picture-in-picture;loop" allowfullscreen></iframe> {% endcomment %}
+<iframe class="video-background" src="https://www.youtube.com/embed/JbF-kl0M6kI?loop=1&playlist=JbF-kl0M6kI&autoplay=1&showinfo=0&controls=0"  frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; loop; gyroscope; picture-in-picture" allowfullscreen></iframe>
             <div class="welcome-msg">
                 <h1>WELCOME!</h1>
                 <div class="welcome-title"><h1><u>高雄交通事故分析網站</u></h1></div>
@@ -40,7 +39,6 @@
                 <a href="/home" class="btn enterbtn" id="enter_btn">進入網站</a>
             </div>
             <img src="{%  static 'python.png' %}" class="logo">
-
             {% include "footer.html" %}
         </section>
 
